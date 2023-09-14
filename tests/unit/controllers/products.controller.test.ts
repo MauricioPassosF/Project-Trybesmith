@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { Request, Response } from 'express';
-import productsServices, { CreateProductResponse } from '../../../src/services/products.services'
+import productsServices, { CreateProductResponse, GetAllProductsResponse } from '../../../src/services/products.services'
 import productControllers from '../../../src/controllers/product.controllers';
 
 
@@ -32,6 +32,30 @@ describe('ProductsController', function () {
     sinon.stub(productsServices, 'create').resolves(serviceResponse)
     await productControllers.create(req, res)
     expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith( mockData );
+  })
+
+  it('Testa os dados retornados na rota /products, metodo get', async function (){    
+    const mockData = [
+      {
+        "id": 1,
+        "name": "Pedra Filosofal",
+        "price": "20 gold",
+        "orderId": null
+      },
+      {
+        "id": 2,
+        "name": "Lança do Destino",
+        "price": "100 diamond",
+        "orderId": 1
+      }
+    ]
+    const serviceResponse: GetAllProductsResponse = {
+      status: 'SUCCESSFULL', data:  mockData 
+    }
+    sinon.stub(productsServices, 'getAll').resolves(serviceResponse)
+    await productControllers.getAll(req, res)
+    expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith( mockData );
   })
 
