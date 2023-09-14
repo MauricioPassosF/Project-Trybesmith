@@ -8,4 +8,9 @@ productRouter.post(
   productControllers.create,
 );
 
+productRouter.get(
+  '/',
+  productControllers.getAll,
+);
+
 export default productRouter;

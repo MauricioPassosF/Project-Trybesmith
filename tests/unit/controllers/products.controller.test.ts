@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { Request, Response } from 'express';
-import productsServices, { CreateResponse } from '../../../src/services/products.services'
+import productsServices, { CreateProductResponse } from '../../../src/services/products.services'
 import productControllers from '../../../src/controllers/product.controllers';
 
 
@@ -26,7 +26,7 @@ describe('ProductsController', function () {
     }
     
     const mockData = {name: "Martelo de Thor", id: 4, price: '30 peças de ouro'}
-    const serviceResponse: CreateResponse = {
+    const serviceResponse: CreateProductResponse = {
       status: 'CREATED', data:  mockData 
     }
     sinon.stub(productsServices, 'create').resolves(serviceResponse)

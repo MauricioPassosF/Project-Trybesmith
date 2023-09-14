@@ -8,6 +8,12 @@ const create = async (req: Request, res: Response) => {
   res.status(mapStatusHTTP(status)).json(data);
 };
 
+const getAll = async (req: Request, res: Response) => {
+  const { data, status } = await productsServices.getAll();
+  res.status(mapStatusHTTP(status)).json(data);
+};  
+
 export default {
   create,
+  getAll,
 };
