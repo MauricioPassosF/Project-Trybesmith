@@ -15,8 +15,8 @@ const authenticate = async (loginInfo: {
     return { status: 'UNAUTHORIZED', data: { message: 'Username or password invalid' } };
   }
   const { password, id, username } = modelResponse.dataValues;
-
   const validatePassword = await bcrypt.compare(loginInfo.password, password); 
+  
   if (!validatePassword) {
     return { status: 'UNAUTHORIZED', data: { message: 'Username or password invalid' } };
   }

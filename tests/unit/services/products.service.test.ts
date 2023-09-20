@@ -18,26 +18,25 @@ describe('ProductsService', function () {
     expect(serviceResponse.data).to.deep.equal( mockReturn );
   })
 
-  // it('Testa os dados retornados na rota /products, metodo get, na camada service', async function (){ 
-  //   const mockData = [
-  //     {
-  //       "id": 1,
-  //       "name": "Pedra Filosofal",
-  //       "price": "20 gold",
-  //       "orderId": null
-  //     },
-  //     {
-  //       "id": 2,
-  //       "name": "Lança do Destino",
-  //       "price": "100 diamond",
-  //       "orderId": 1
-  //     }
-  //   ];
-  //   const mockReturn = {name: "Martelo de Thor", id: 4, price: '30 peças de ouro'};
-  //   const mockCreateReturn = ProductModel.build(mockData);
-  //   sinon.stub(ProductModel, 'findAll').resolves(mockCreateReturn);
-  //   const serviceResponse = await productsServices.getAll();
-  //   expect(serviceResponse.status).to.eq('SUCCESSFUL');
-  //   expect(serviceResponse.data).to.deep.equal( mockReturn );
-  // })
+  it('Testa os dados retornados na rota /products, metodo get, na camada service', async function (){ 
+    const mockData = [
+      {
+        "id": 1,
+        "name": "Pedra Filosofal",
+        "price": "20 gold",
+        "orderId": null
+      },
+      {
+        "id": 2,
+        "name": "Lança do Destino",
+        "price": "100 diamond",
+        "orderId": 1
+      }
+    ];
+    const mockCreateReturn = ProductModel.bulkBuild(mockData);
+    sinon.stub(ProductModel, 'findAll').resolves(mockCreateReturn);
+    const serviceResponse = await productsServices.getAll();
+    expect(serviceResponse.status).to.eq('SUCCESSFULL');
+    expect(serviceResponse.data).to.deep.equal( mockData );
+  })
 });
