@@ -7,6 +7,11 @@ const getAll = async (req: Request, res: Response) => {
   res.status(mapStatusHTTP(status)).json(data);
 };  
 
+const create = async (req: Request, res: Response) => {
+  const { data, status } = await ordersServices.create(req.body);
+  res.status(mapStatusHTTP(status)).json(data);
+}; 
+
 export default {
-  getAll,
+  getAll, create,
 };

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
 import UserModel from '../database/models/user.model';
 import { ServiceResponse } from '../types/ServiceResponse';
+import { tokenCreate } from '../utils/token';
 
 type CreateLoginData = { token: string };
 export type LoginResponse = ServiceResponse<CreateLoginData>;
@@ -21,9 +21,11 @@ const authenticate = async (loginInfo: {
     return { status: 'UNAUTHORIZED', data: { message: 'Username or password invalid' } };
   }
 
-  const token = jwt.sign({
-    id, username,
-  }, 'secret');
+  const token = tokenCreate(id, username);
+  
+  // jwt.sign({
+  //   id, username,
+  // }, 'secret');
   return { status: 'SUCCESSFULL', data: { token } };
 };
 
