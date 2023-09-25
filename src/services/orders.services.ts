@@ -1,13 +1,9 @@
-// import db from '../database/models';
 import OrderModel from '../database/models/order.model';
 import ProductModel from '../database/models/product.model';
 import UserModel from '../database/models/user.model';
 import { Order } from '../types/Order';
 import { ServiceResponse } from '../types/ServiceResponse';
 
-// type ProductIds = { products: number[] };
-// type GetAllOrdersResponseData = Order & ProductIds;
-// export type CreateProductResponse = ServiceResponse<CreateProductResponseData>;
 export type GetAllOrdersResponse = ServiceResponse<Order[]>;
 type CreateOrderData = {
   userId: number;
@@ -37,23 +33,13 @@ const create = async ({ userId, productIds }: CreateOrderData): Promise<CreateOr
   if (!userModelResponse) {
     return { status: 'NOT_FOUND', data: { message: '"userId" not found' } };
   }
-  // const t = await db.transaction();
-  // try {
   const orderModelResponse = await OrderModel.create({ userId });
-  // const orderModelResponse = await OrderModel.create({ userId }, { transaction: t });
   const { id } = orderModelResponse.dataValues;
-  // console.log(id);
   const productModelResponse = productIds.map(async (productId) => {
-    // await ProductModel.update({ orderId: id }, { where: { id: productId }, transaction: t });
     await ProductModel.update({ orderId: id }, { where: { id: productId } });
   });
   Promise.all(productModelResponse);
-  // await t.commit();
   return { status: 'CREATED', data: { userId, productIds } };
-  // } catch (error) {
-  //   await t.rollback();
-  //   throw error;
-  // }
 };
 
 export default {

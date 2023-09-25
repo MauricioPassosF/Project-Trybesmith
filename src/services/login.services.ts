@@ -23,9 +23,6 @@ const authenticate = async (loginInfo: {
 
   const token = tokenCreate(id, username);
   
-  // jwt.sign({
-  //   id, username,
-  // }, 'secret');
   return { status: 'SUCCESSFULL', data: { token } };
 };
 

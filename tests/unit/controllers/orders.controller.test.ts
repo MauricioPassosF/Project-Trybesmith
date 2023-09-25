@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { Request, Response } from 'express';
-import ordersServices, {GetAllOrdersResponse} from '../../../src/services/orders.services'
+import ordersServices, {CreateOrderResponse, GetAllOrdersResponse} from '../../../src/services/orders.services'
 import ordersControllers from '../../../src/controllers/orders.controllers';
 
 
@@ -37,6 +37,22 @@ describe('OrdersController', function () {
     sinon.stub(ordersServices, 'getAll').resolves(serviceResponse)
     await ordersControllers.getAll(req, res)
     expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith( mockData );
+  })
+
+  it('Testa os dados retornados na rota /orders, metodo post', async function(){
+    const mockData = {
+      "productIds": [1, 2],
+      "userId": 1,
+    }
+
+    req.body = mockData
+    const serviceResponse: CreateOrderResponse = {
+      status: 'CREATED', data:  mockData      
+    }
+    sinon.stub(ordersServices, 'create').resolves(serviceResponse);
+    await ordersControllers.create(req, res)
+    expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith( mockData );
   })
 
